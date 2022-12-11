@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "*.lex": "lex",
+        "configs.h": "c",
+        "processo.h": "c",
+        "stdlib.h": "c",
+        "memoria.h": "c",
+        "*.tcc": "c",
+        "compare": "c",
+        "deque": "c",
+        "string": "c",
+        "vector": "c",
+        "memory_resource": "c",
+        "functional": "c",
+        "memory": "c",
+        "numeric": "c",
+        "ostream": "c",
+        "string_view": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "typeinfo": "c",
+        "algorithm": "c"
+    }
+}
