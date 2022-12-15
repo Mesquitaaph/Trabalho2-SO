@@ -31,7 +31,8 @@ void alocar_pagina(Processo *proc, unsigned int pagina) {
     f = swap_out();
     frames[f] = proc->pid;
     adicionar_pag_tabela(proc, pagina, f);
-
+    // Coloquei esse exit() aqui somente para analisar o simulador ate o primeiro swap out
+    //exit(0);
 }
 
 unsigned int swap_out() {
@@ -55,6 +56,7 @@ unsigned int swap_out() {
             frame_liberado = f;
         }
     }
-    printf("f=%d\n", frame_liberado);
+    printf("P%d sofreu swap out\n", mais_antigo->pid);
+    printf("Frame %d liberado\n", frame_liberado);
     return frame_liberado;
 }
