@@ -20,5 +20,7 @@ Processo *criar_processo();
 unsigned int pag_mais_antiga(Processo *proc);
 void adicionar_pag_tabela(Processo *proc, unsigned int pagina, unsigned int frame);
 void substituir_pag_tabela(Processo *proc, unsigned int pagina);
-
+void print_adicao_tabela_pagina(Processo *proc, unsigned int pagina, unsigned int frame);
+void print_substituicao_tabela_pagina(Processo *proc, unsigned int pagina, unsigned int ultima_pag);
+void print_acesso_memoria_sem_alteracao(Processo *proc, unsigned int pagina) ;
 #endif

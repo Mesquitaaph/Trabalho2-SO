@@ -5,5 +5,9 @@
 **Raphael Felipe de Cantuaria Mesquita - 118020104**
 
 ### Compilação
-
+`$ make simulador`
 ### Execução
+`$ make run`\
+ou\
+`$ make simulador`\
+`$ ./simulador`

@@ -10,7 +10,9 @@ void acessar_pagina(Processo *proc, unsigned int pagina) {
     printf("P%d acessando pagina %d (t=%d)\n", proc->pid, pagina, getTempo());
     if (proc->tabela_paginas[pagina] == -1) {
         alocar_pagina(proc, pagina);
-    } 
+    } else {
+        print_acesso_memoria_sem_alteracao(proc, pagina);
+    }
     proc->momento_acessos[pagina] = getTempo();
     proc->prox_acesso += TEMPO_ACESSO_MEM;
 }
@@ -31,8 +33,6 @@ void alocar_pagina(Processo *proc, unsigned int pagina) {
     f = swap_out();
     frames[f] = proc->pid;
     adicionar_pag_tabela(proc, pagina, f);
-    // Coloquei esse exit() aqui somente para analisar o simulador ate o primeiro swap out
-    //exit(0);
 }
 
 unsigned int swap_out() {

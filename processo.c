@@ -27,16 +27,7 @@ unsigned int pag_mais_antiga(Processo *proc) {
 }
 
 void adicionar_pag_tabela(Processo *proc, unsigned int pagina, unsigned int frame) {
-    printf("P%d (t=%d):\n", proc->pid, getTempo());
-    for (unsigned int p=0; p < PAGS_PROC; p++) {
-        printf("%d\t", p);
-    }
-    printf("\n");
-    for (unsigned int p=0; p < PAGS_PROC; p++) {
-        if (p == pagina) printf("-1->%d\t", frame);
-        else printf("%d\t", proc->tabela_paginas[p]);
-    }
-    printf("\n");
+    print_adicao_tabela_pagina(proc, pagina, frame);
 
     if (proc->working_set == 0) proc->chegada_mem = getTempo();
     
@@ -46,18 +37,50 @@ void adicionar_pag_tabela(Processo *proc, unsigned int pagina, unsigned int fram
 
 void substituir_pag_tabela(Processo *proc, unsigned int pagina) {
         unsigned int ultima_pag = pag_mais_antiga(proc);
-        for (unsigned int p=0; p < PAGS_PROC; p++) {
-            printf("%d\t", p);
-        }
-        printf("\n");
-        for (unsigned int p=0; p < PAGS_PROC; p++) {
-            if (p == ultima_pag) printf("%d->-1\t", proc->tabela_paginas[p]);
-            else if (p == pagina) printf("-1->%d\t", proc->tabela_paginas[ultima_pag]);
-            else printf("%d\t", proc->tabela_paginas[p]);
-        }
-        printf("\n");
+
+        print_substituicao_tabela_pagina(proc, pagina, ultima_pag);
 
         proc->tabela_paginas[pagina] = proc->tabela_paginas[ultima_pag];
         proc->tabela_paginas[ultima_pag] = -1;
         proc->momento_acessos[ultima_pag] = -1;
+}
+
+void print_adicao_tabela_pagina(Processo *proc, unsigned int pagina, unsigned int frame) {
+    printf("Tabela de paginas do P%d:\n", proc->pid);
+    for (unsigned int p=0; p < PAGS_PROC; p++) {
+        printf("%d\t", p);
+    }
+    printf("\n");
+    for (unsigned int p=0; p < PAGS_PROC; p++) {
+        if (p == pagina) printf("-1->%d\t", frame);
+        else printf("%d\t", proc->tabela_paginas[p]);
+    }
+    printf("\n\n");
+}
+
+void print_substituicao_tabela_pagina(Processo *proc, unsigned int pagina, unsigned int ultima_pag) {
+    printf("Tabela de paginas do P%d:\n", proc->pid);
+    for (unsigned int p=0; p < PAGS_PROC; p++) {
+        printf("%d\t", p);
+    }
+    printf("\n");
+    for (unsigned int p=0; p < PAGS_PROC; p++) {
+        if (p == ultima_pag) printf("%d->-1\t", proc->tabela_paginas[p]);
+        else if (p == pagina) printf("-1->%d\t", proc->tabela_paginas[ultima_pag]);
+        else printf("%d\t", proc->tabela_paginas[p]);
+    }
+    printf("\n\n");
+}
+
+void print_acesso_memoria_sem_alteracao(Processo *proc, unsigned int pagina) {
+    printf("Pagina %d ja estava na memoria.\n", pagina);
+    printf("Tabela de paginas do P%d:\n", proc->pid);
+    for (unsigned int p=0; p < PAGS_PROC; p++) {
+        printf("%d\t", p);
+    }
+    printf("\n");
+    for (unsigned int p=0; p < PAGS_PROC; p++) {
+        printf("%d\t", proc->tabela_paginas[p]);
+    }
+    printf("\n\n");
 }
