@@ -24,7 +24,6 @@ int main(int argc, char const *argv[])
             num_procs++;
             prox_chegada_proc += TEMPO_CRIA_PROC;
         }
-        if (getTempo() > 10) exit(0);
 
         andar_fila(fila);
         setTempo(fila->atual->processo->prox_acesso);
