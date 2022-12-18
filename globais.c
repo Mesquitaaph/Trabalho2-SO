@@ -1,6 +1,9 @@
 #include "globais.h"
 
+// Instante de tempo em que o simulador esta
 unsigned int t;
+
+// Fila circular dos processos. Organiza os acessos a memoria
 Fila *fila_procs;
 
 unsigned int getTempo() {

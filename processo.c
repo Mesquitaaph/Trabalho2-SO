@@ -3,6 +3,10 @@
 
 unsigned int prox_pid = 1u;
 
+/**
+ * Cria um novo processo com pid autoincrementado e tabela de paginas vazia e 
+ * retorna uma referencia a esse novo processo
+*/
 Processo *criar_processo() {
     Processo *out = malloc(sizeof(Processo));
     out->pid = prox_pid++;
@@ -15,6 +19,9 @@ Processo *criar_processo() {
     return out;
 }
 
+/**
+ * Retorna o indice da pagina do processo `proc` que esta ha mais tempo na memoria
+*/
 unsigned int pag_mais_antiga(Processo *proc) {
     unsigned int ultima_pag = -1;
     for (unsigned int p = 0; p < PAGS_PROC; p++) {
@@ -26,6 +33,10 @@ unsigned int pag_mais_antiga(Processo *proc) {
     return ultima_pag;
 }
 
+/**
+ * Altera a tabela de paginas para inserir a `pagina` do processo `proc` no `frame`
+ * especificado
+*/
 void adicionar_pag_tabela(Processo *proc, unsigned int pagina, unsigned int frame) {
     print_adicao_tabela_pagina(proc, pagina, frame);
 
@@ -35,6 +46,10 @@ void adicionar_pag_tabela(Processo *proc, unsigned int pagina, unsigned int fram
     proc->working_set++;
 }
 
+/**
+ * Insere a `pagina` do processo `proc` no frame que esta sendo usando pela pagina
+ * que esta ha mais tempo na memoria
+*/
 void substituir_pag_tabela(Processo *proc, unsigned int pagina) {
         unsigned int ultima_pag = pag_mais_antiga(proc);
 
@@ -45,6 +60,9 @@ void substituir_pag_tabela(Processo *proc, unsigned int pagina) {
         proc->momento_acessos[ultima_pag] = -1;
 }
 
+/**
+ * Imprime um acesso a `pagina` do processo `proc` que foi alocada no `frame` especificado
+*/
 void print_adicao_tabela_pagina(Processo *proc, unsigned int pagina, unsigned int frame) {
     printf("Tabela de paginas do P%d:\n", proc->pid);
     for (unsigned int p=0; p < PAGS_PROC; p++) {
@@ -58,6 +76,10 @@ void print_adicao_tabela_pagina(Processo *proc, unsigned int pagina, unsigned in
     printf("\n\n");
 }
 
+/**
+ * Imprime um acesso a `pagina` do processo `proc` que foi alocada no `frame`
+ * que estava sendo usado por `ultima_pag`
+*/
 void print_substituicao_tabela_pagina(Processo *proc, unsigned int pagina, unsigned int ultima_pag) {
     printf("Tabela de paginas do P%d:\n", proc->pid);
     for (unsigned int p=0; p < PAGS_PROC; p++) {
@@ -72,6 +94,10 @@ void print_substituicao_tabela_pagina(Processo *proc, unsigned int pagina, unsig
     printf("\n\n");
 }
 
+/**
+ * Imprime um acesso a `pagina` do processo `proc` em que nao houve alteracao
+ * na tabela de paginas do processo
+*/
 void print_acesso_memoria_sem_alteracao(Processo *proc, unsigned int pagina) {
     printf("Pagina %d ja estava na memoria.\n", pagina);
     printf("Tabela de paginas do P%d:\n", proc->pid);

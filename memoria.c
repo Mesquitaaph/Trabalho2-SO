@@ -1,11 +1,20 @@
 #include "memoria.h"
 
+// Array de frames que indica qual processo esta usando tal frame
+// frames[i] = x significa que o processo x esta usando o frame i
+// frames[i] = -1 significa que  o frame i esta livre
 unsigned int frames[NUM_FRAMES];
 
+/**
+ * Inicia o array de frames com o valor `-1`, que representa um frame vazio.
+*/
 void iniciar_memoria() {
     memset(frames, -1, sizeof(unsigned int[NUM_FRAMES]));
 }
 
+/**
+ * Realiza um acesso a `pagina` do processo `proc`.
+*/
 void acessar_pagina(Processo *proc, unsigned int pagina) {
     printf("P%d acessando pagina %d (t=%d)\n", proc->pid, pagina, getTempo());
     if (proc->tabela_paginas[pagina] == -1) {
@@ -17,6 +26,10 @@ void acessar_pagina(Processo *proc, unsigned int pagina) {
     proc->prox_acesso += TEMPO_ACESSO_MEM;
 }
 
+/**
+ * Aloca a `pagina` do processo `proc` em um frame vazio, realizando swap-out
+ * se necessario
+*/
 void alocar_pagina(Processo *proc, unsigned int pagina) {
     if (proc->working_set == WSL) {
         substituir_pag_tabela(proc, pagina);
@@ -35,6 +48,10 @@ void alocar_pagina(Processo *proc, unsigned int pagina) {
     adicionar_pag_tabela(proc, pagina, f);
 }
 
+/**
+ * Realiza o swap-out do processo que esta ha mais tempo na memoria e retorna um
+ * frame que foi liberado pelo swap-out
+*/
 unsigned int swap_out() {
     Fila *fila = getFila();
     Processo *mais_antigo = fila->atual->processo;

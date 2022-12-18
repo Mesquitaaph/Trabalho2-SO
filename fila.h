@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include "processo.h"
 
+/**
+ * Estrutura que armzena um processo na fila circular
+*/
 typedef struct Proc_Fila Proc_Fila;
 struct Proc_Fila {
     Processo *processo;
@@ -11,6 +14,9 @@ struct Proc_Fila {
 
 };
 
+/**
+ * Fila circular de processos
+*/
 typedef struct Fila {
     Proc_Fila *atual;
 } Fila;

@@ -7,6 +7,9 @@
 
 #include "configs.h"
 
+/**
+ * Estrutura que representa um processo
+*/
 typedef struct Processo {
     unsigned int pid;
     unsigned int tabela_paginas[PAGS_PROC];

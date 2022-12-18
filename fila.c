@@ -1,5 +1,8 @@
 #include "fila.h"
 
+/**
+ * Cria uma fila circular de processos vazia e retorna uma referência para essa fila.
+*/
 Fila *criar_fila() {
     Fila *out = malloc(sizeof(Fila));
     out->atual = NULL;
@@ -7,6 +10,9 @@ Fila *criar_fila() {
     return out;
 }
 
+/**
+ * Adiciona o processo `proc` a `fila` circular.
+*/
 void adicionar_proc(Fila *fila, Processo *proc) {
     if (fila->atual == NULL) {
         fila->atual = malloc(sizeof(Proc_Fila));
@@ -21,6 +27,9 @@ void adicionar_proc(Fila *fila, Processo *proc) {
     fila->atual->prox->prox = temp;
 }
 
+/**
+ * Faz a fila circular andar
+*/
 void andar_fila(Fila *fila) {
     if (fila->atual == NULL) return;
     fila->atual = fila->atual->prox;
