@@ -18,10 +18,14 @@ int main(int argc, char const *argv[])
         if (num_procs < MAX_NUM_PROCS && 
             (num_procs == 0 || prox_chegada_proc <= fila->atual->prox->processo->prox_acesso)) {
             setTempo(prox_chegada_proc);
-            adicionar_proc(fila, criar_processo());
+            Processo *novo_proc = criar_processo();
+            adicionar_proc(fila, novo_proc);
+            printf("O proceso P%d foi criado.\n", novo_proc->pid);
             num_procs++;
             prox_chegada_proc += TEMPO_CRIA_PROC;
         }
+        if (getTempo() > 10) exit(0);
+
         andar_fila(fila);
         setTempo(fila->atual->processo->prox_acesso);
         acessar_pagina(fila->atual->processo, rand() % PAGS_PROC);
